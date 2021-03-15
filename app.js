@@ -12,10 +12,11 @@ require("dotenv").config();
 
 const stripe = new Stripe(process.env.STRIPE_KEY);
 
-app.use(cors({ origin: "https://stripe-checkout-payment.web.app" }));
+app.use(cors({ origin: "https://stripe-checkout-payment.web.app/" }));
 app.use(express.json());
 
 app.post("/api/checkout", async (req, res) => {
+  console.log("in")
   try {
     const { amount, id } = req.body;
     const payment = await stripe.paymentIntents.create({
