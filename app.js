@@ -13,6 +13,7 @@ require("dotenv").config();
 const stripe = new Stripe(process.env.STRIPE_KEY);
 
 app.use(cors({ origin: "https://stripe-checkout-payment.web.app" }));
+// app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
 
 app.post("/api/checkout", async (req, res) => {
@@ -26,11 +27,11 @@ app.post("/api/checkout", async (req, res) => {
       payment_method: id,
       confirm: true,
     });
-    res.send({ message: "pago exitoso" });
+    res.status(200).json({ok:"true", message: "pago exitoso" });
     console.log(payment);
   } catch (error) {
     console.log(error);
-    res.json({ message: error.raw.message });
+    res.status(400).json({ok:"false", message: error.raw.message });
   }
 });
 
